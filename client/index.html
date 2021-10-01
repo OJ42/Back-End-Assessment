@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Back End Assessment</title>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body class="container">
+    <!-- Give a compliment when pushed -->
+    <button id="complimentButton">Get a compliment</button><br>
+    <!-- give a fortune when pushed -->
+    <button id='fortuneButton'>Get a fortune!</button>
+ 
+    <section>
+      <!-- main title centered -->
+      <div style="text-align: center;">
+      <h1>Christmas Wish List</h1>
+      </div>
+      <!-- second title centered -->
+      <div style="text-align: center;">
+      <h2>What do you want Santa to bring this year?</h1>
+      </div>
+      <!-- center add wish, wish list and remove wish buttons -->
+      <div style="text-align: center;">         
+      <input id='newItem' placeholder='Add Wish' />
+      <button id='addWish'>Add Wish</button>
+      <button id='getWish'>Wish List</button>   
+      <button id='removeWish'>Remove Wish</button>
+    </div>
+    
+    <!-- center image of santa -->
+    <div style="text-align: center;">
+      <a href="https://www.emailsanta.com/">
+      <img src="https://i5.walmartimages.com/asr/32e69104-23b4-4da0-bcdc-d33a603cecd7.4a4f87bcc19de0c65eac3e68631e4131.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF">
+    </a>
+    </div>
+    <div style="text-align: center;">
+      <h2>When your list is ready, click on Santa to make a letter to send to him!</h1>
+    </div>
+    <iframe src="https://open.spotify.com/embed/track/5lXoHxvqvCvIGgctvFV9uM" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </section>
+    <!-- get axios working -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      // call the function for compliment button
+      document.getElementById("complimentButton").onclick = function () {
+        axios.get("http://localhost:4000/api/compliment/")
+            .then(function (response) {
+              const data = response.data;
+              alert(data);
+            });
+      };
+      // call the function for fortune button
+      document.querySelector("#fortuneButton").addEventListener("click", function() {
+        axios.get("http://localhost:4000/api/fortunes/")
+            .then(function (res) {
+              alert(res.data);
+            });
+      })
+      //show the wish list array when wish list is pushed
+      let wishArrLength = 0; 
+      document.querySelector("#getWish").addEventListener("click", function() {
+        axios.get("http://localhost:4000/api/items/")
+            .then(function (res) {
+              wishArrLength = res.data.length; 
+              alert(res.data);
+            })
+      })
+      //add a wish when an input is given
+      document.querySelector("#addWish").addEventListener("click", function() {
+        const newItem = document.querySelector('#newItem').value;
+
+        if (!newItem.trim()) {
+          alert('You have to add a wish')
+          return;
+        }
+
+        const body = { newItem };
+        //show user their wish input was recieved and added
+        axios.post("http://localhost:4000/api/items/", body)
+            .then(function (res) {
+              wishArrLength = res.data.length; 
+              alert('Wish added!');
+            })
+      })
+      //if there are no wishes prompt the user to add a wish
+      document.querySelector("#removeWish").addEventListener("click", function() {
+        if (wishArrLength <= 0) {
+          alert('No wishes to remove, first add a wish')
+          return;
+        }
+        //show the user how many wishes are listed and ask which one they want to remove
+        const indexToDelete = prompt(`You have ${wishArrLength} wishes listed. The wishes are in order starting at 0. Remove a wish by inputting a number 0 - ${wishArrLength - 1} to not remove any wish leave blank and push ok`)
+        console.log(indexToDelete)
+        //remove the wish the user selected or the last wish in line by default
+        axios.delete(`http://localhost:4000/api/items/${indexToDelete}`)
+            .then(function (res) {
+              wishArrLength = res.data.length;
+              alert(`Wish Removed`);
+            })
+      })
+    </script>
+  </body>
+</html>

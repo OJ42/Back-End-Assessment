@@ -1,0 +1,31 @@
+body {
+    background-color: darkslategray;
+  }
+
+h1 {
+    color: #da0a0a;
+    font-family: arial, sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 1px;
+    }
+    
+h2 {
+    color: #ffffff;
+    font-family: arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 1px;
+    }
+    
+button {
+    background-color: #232323;
+    width: 150px;
+    height: 25px;
+    color: turquoise;
+    border: none;
+    margin: 5px;
+    }
+
