@@ -1,11 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
 
-
 app.use(cors());
-
 app.use(express.json()); // When we want to be able to accept JSON.
 
 app.get("/api/compliment", (req, res) => {
@@ -13,13 +10,10 @@ app.get("/api/compliment", (req, res) => {
     "Cool shirt!",
     "Your Javascript skills are stellar.",
   ];
-
   let randomIndex = Math.floor(Math.random() * compliments.length);
   let randomCompliment = compliments[randomIndex];
   res.status(200).send(randomCompliment);
-
 });
-
 //show a random fortune when fortune button is pushed
 app.get('/api/fortunes', function (req, res) { 
   const fortunes = [

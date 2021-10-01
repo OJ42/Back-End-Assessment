@@ -8,8 +8,7 @@
     <!-- Give a compliment when pushed -->
     <button id="complimentButton">Get a compliment</button><br>
     <!-- give a fortune when pushed -->
-    <button id='fortuneButton'>Get a fortune!</button>
- 
+    <button id='fortuneButton'>Get a fortune!</button> 
     <section>
       <!-- main title centered -->
       <div style="text-align: center;">
@@ -25,8 +24,7 @@
       <button id='addWish'>Add Wish</button>
       <button id='getWish'>Wish List</button>   
       <button id='removeWish'>Remove Wish</button>
-    </div>
-    
+    </div>    
     <!-- center image of santa -->
     <div style="text-align: center;">
       <a href="https://www.emailsanta.com/">
@@ -68,12 +66,10 @@
       //add a wish when an input is given
       document.querySelector("#addWish").addEventListener("click", function() {
         const newItem = document.querySelector('#newItem').value;
-
         if (!newItem.trim()) {
           alert('You have to add a wish')
           return;
         }
-
         const body = { newItem };
         //show user their wish input was recieved and added
         axios.post("http://localhost:4000/api/items/", body)
